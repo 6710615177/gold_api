@@ -20,11 +20,13 @@ def get_dashboard(
         news = get_news_data(limit=news_limit)
         features_payload = get_gold_features(interval=interval, period=period)
         prediction = mock_prediction(features_payload["features"])
+        current_price = market["price"]
         return {
             "market": market,
             "features": features_payload["features"],
             "prediction": prediction,
             "news": news["news"],
+            "entry_price": current_price ,
         }
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
